@@ -53,7 +53,16 @@ class _FakeWeatherRepository implements WeatherRepository {
     if (failNetwork) return _cached;
     return [
       for (final city in cities)
-        Weather(city: city, temperature: 25, condition: 'Clear'),
+        Weather(
+          city: city,
+          temperature: 25,
+          condition: 'Clear',
+          feelsLike: 27.4,
+          humidity: 70,
+          windSpeed: 4.2,
+          sunrise: DateTime(2025, 1, 1, 6, 15),
+          sunset: DateTime(2025, 1, 1, 18, 5),
+        ),
     ];
   }
 }
@@ -84,7 +93,16 @@ void main() {
       final repo = _FakeWeatherRepository(
         watchlist: ['Yangon'],
         cached: [
-          const Weather(city: 'Yangon', temperature: 31, condition: 'Haze'),
+          Weather(
+            city: 'Yangon',
+            temperature: 31,
+            condition: 'Haze',
+            feelsLike: 34.6,
+            humidity: 65,
+            windSpeed: 2.6,
+            sunrise: DateTime(2025, 1, 1, 6, 15),
+            sunset: DateTime(2025, 1, 1, 18, 5),
+          ),
         ],
         failNetwork: true,
       );

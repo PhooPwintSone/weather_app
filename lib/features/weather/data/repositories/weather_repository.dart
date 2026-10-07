@@ -8,14 +8,6 @@ import 'package:ui/features/weather/domain/repositories/weather_repository.dart'
 import '../datasources/weather_local_datasource.dart';
 import '../models/weather_model.dart';
 
-/// Offline-first [WeatherRepository] for the watchlist.
-///
-/// For every city: `http.get(ApiConstants.currentWeatherUri(city))` inside
-/// a try-catch —
-/// - status 200: decode the body, map it to a [Weather], and cache the raw
-///   JSON map in `weatherCacheBox` under that city name
-/// - failure (SocketException, non-200, timeout, malformed body): fall back
-///   to the cached JSON for that city so the UI still populates offline
 class WeatherRepositoryImpl implements WeatherRepository {
   const WeatherRepositoryImpl({required this.local});
 
@@ -71,7 +63,6 @@ class WeatherRepositoryImpl implements WeatherRepository {
             // A failed cache write must not fail the network read.
           }
         }
-        // Non-200 → `weather` stays null → cached-JSON fallback below.
       } catch (_) {
         // SocketException / ClientException / timeout / decode failure
         // → cached-JSON fallback below.
@@ -83,13 +74,12 @@ class WeatherRepositoryImpl implements WeatherRepository {
     return results;
   }
 
-  /// Cached raw JSON for [city], parsed — null when missing/unreadable.
   Future<Weather?> _cachedWeather(String city) async {
     try {
       final cached = await local.readWeather(city);
       return cached == null ? null : WeatherModel.fromJson(cached, city);
     } catch (_) {
-      return null; // Skip this city; offline reading must never crash.
+      return null;
     }
   }
 }

@@ -3,17 +3,6 @@ import 'package:ui/core/error/exceptions.dart';
 
 import 'weather_local_datasource.dart';
 
-/// Backed by the three boxes opened in `main.dart`:
-/// - `weatherCacheBox`: city name → raw OpenWeatherMap JSON
-/// - `watchlistBox`: single entry holding the saved `List<String>` of cities
-/// - `settingsBox`: app-settings flags (`hasSeededDefaults` → bool)
-///
-/// The boxes are typed `Box<Map<dynamic, dynamic>>` / `Box<List<dynamic>>`
-/// on purpose: Hive decodes stored maps as `Map<dynamic, dynamic>` and lists
-/// as `List<dynamic>` (see `binary_reader_impl.dart`), and `Box.get` performs
-/// `value as E?`. Declaring `Box<Map<String, dynamic>>` / `Box<List<String>>`
-/// would therefore throw a TypeError after an app restart. The exact types
-/// (`Map<String, dynamic>`, `List<String>`) are restored at this boundary.
 class WeatherLocalDatasourceImpl implements WeatherLocalDatasource {
   WeatherLocalDatasourceImpl({
     required this.weatherCacheBox,

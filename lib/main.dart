@@ -15,24 +15,12 @@ Future<void> main() async {
   // Reads .env (declared as a pubspec asset) → dotenv.env['OWM_KEY'].
   await dotenv.load(fileName: ".env");
 
-  // All boxes must be open BEFORE runApp so the repository can use them
-  // from the first frame.
-  //
-  // Box generics are Hive's *decoded* types (`List<dynamic>`,
-  // `Map<dynamic, dynamic>`), not `List<String>` / `Map<String, dynamic>`:
-  // Hive decodes to those types and `Box.get` casts with `as E?`, so tighter
-  // generics would throw a TypeError after an app restart. The datasource
-  // converts to the exact types at the boundary.
   await Hive.initFlutter();
-  final watchlistBox = await Hive.openBox<List<dynamic>>(
-    'watchlistBox', // entry 'cities' → List<String> of saved cities
-  );
+  final watchlistBox = await Hive.openBox<List<dynamic>>('watchlistBox');
   final weatherCacheBox = await Hive.openBox<Map<dynamic, dynamic>>(
-    'weatherCacheBox', // city name → raw OpenWeatherMap JSON response
+    'weatherCacheBox',
   );
-  final settingsBox = await Hive.openBox<bool>(
-    'settingsBox', // entry 'hasSeededDefaults' → bool
-  );
+  final settingsBox = await Hive.openBox<bool>('settingsBox');
 
   runApp(
     MultiRepositoryProvider(

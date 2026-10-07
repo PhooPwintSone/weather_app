@@ -19,7 +19,6 @@ class WeatherLoading extends WeatherState {
 class WeatherLoaded extends WeatherState {
   const WeatherLoaded({required this.weatherList});
 
-  /// One entry per saved city, in watchlist order.
   final List<Weather> weatherList;
 
   @override

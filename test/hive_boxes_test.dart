@@ -31,10 +31,12 @@ void main() {
     );
     // Raw OpenWeatherMap JSON, keyed by the city name.
     await cacheBox.put('Yangon', <String, dynamic>{
-      'main': {'temp': 30.5},
+      'main': {'temp': 30.5, 'feels_like': 33.0, 'humidity': 74},
       'weather': [
         {'main': 'Clear'},
       ],
+      'wind': {'speed': 3.7},
+      'sys': {'sunrise': 1735689300, 'sunset': 1735730100},
     });
 
     final settingsBox = await Hive.openBox<bool>('settingsBox');
@@ -56,6 +58,17 @@ void main() {
     expect(model.city, 'Yangon');
     expect(model.temperature, 30.5);
     expect(model.condition, 'Clear');
+    expect(model.feelsLike, 33.0);
+    expect(model.humidity, 74);
+    expect(model.windSpeed, 3.7);
+    expect(
+      model.sunrise,
+      DateTime.fromMillisecondsSinceEpoch(1735689300 * 1000),
+    );
+    expect(
+      model.sunset,
+      DateTime.fromMillisecondsSinceEpoch(1735730100 * 1000),
+    );
 
     final reopenedSettings = await Hive.openBox<bool>('settingsBox');
     expect(

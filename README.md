@@ -19,6 +19,9 @@ the API key) fails.
   that saves the city and refreshes the list.
 - **Swipe to delete** — cards dismiss right-to-left over a red
   delete background; the city is removed from the box and the list refreshes.
+- **Tap for details** — tapping a card opens a blurred, dark-tinted bottom
+  sheet in that card's pastel color showing feels-like, humidity, wind, and
+  sunrise/sunset times.
 - **Offline cache** — the raw JSON of every successful response is stored per
   city name. If a request fails (`SocketException`, non-200, timeout,
   missing key), that city's cached JSON is parsed instead; a city with
