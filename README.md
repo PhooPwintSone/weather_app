@@ -5,9 +5,8 @@ weather — **offline-first**: every city tries a live [OpenWeatherMap](https://
 request first and falls back to the last cached response when the network (or
 the API key) fails.
 
-> This app lives inside a collection of class exercises (`flutter_class`).
-> The repo root is not a Flutter project — always `cd ui` before running
-> `flutter` commands.
+> Run all `flutter` commands from this directory — the repo root is the Flutter
+> project (the package name is `ui`, so internal imports are `package:ui/...`).
 
 ## Features
 
@@ -53,7 +52,6 @@ lib/
 ├── core/
 │   ├── constants/api_constants.dart   # Uri builder, reads OWM_KEY from .env
 │   └── error/exceptions.dart          # NetworkException / CacheException
-├── curve_ui/                     # separate curved-login UI exercise (not routed)
 └── features/weather/
     ├── data/
     │   ├── datasources/          # interface + Hive-backed implementation
@@ -95,12 +93,11 @@ OWM_KEY=your_api_key_here
 Create a free key at [openweathermap.org](https://home.openweathermap.org/users/sign_up)
 and replace the placeholder. Without a valid key every request returns 401,
 so each city falls back to its cached JSON (empty on a fresh install).
-`.env` is listed in `ui/.gitignore` — never commit the real key.
+`.env` is listed in `.gitignore` — never commit the real key.
 
 ## Getting started
 
 ```sh
-cd ui
 flutter pub get
 flutter run -d chrome     # or -d web-server / an Android emulator
 ```
@@ -133,8 +130,6 @@ flutter test
 
 ## Notes
 
-- `lib/curve_ui/` is a standalone curved-login UI exercise; it is not routed
-  from `WeatherApp`. Its header uses the `asset\images\p4.jpg` asset.
 - The theme declares `fontFamily: 'SanFrancisco'` in `lib/app.dart`.
 - State management here is **flutter_bloc** — other apps in this collection
   use Riverpod, GetX, or Provider; don't mix their conventions into this one.
